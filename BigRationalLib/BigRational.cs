@@ -57,6 +57,8 @@ namespace BigRationalLib
             return new BigRational(BigInteger.Parse(tab[0]), BigInteger.Parse(tab[1]));
         }
 
+        public static bool IsNaN(BigRational b) => (b.Numerator == 0 && b.Denominator == 0);
+
         //relacje
 
         //artmetyka
