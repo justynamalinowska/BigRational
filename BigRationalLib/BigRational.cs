@@ -1,9 +1,10 @@
-﻿using System.Numerics;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 
 namespace BigRationalLib
 {
-    public readonly struct BigRational
+    public readonly partial struct BigRational
     {
         //dane, wewnętrzna reprezentacja 
         public BigInteger Numerator { get; init; } 
@@ -11,7 +12,11 @@ namespace BigRationalLib
 
         public static readonly BigRational Zero = new BigRational(0, 1);
         public static readonly BigRational One = new BigRational(1, 1);
+        public static readonly BigRational Half = new BigRational(1, 2);
+
         public static readonly BigRational NaN = new BigRational(0, 0);
+        public static readonly BigRational PositiveInfinity = new BigRational(1, 0);
+        public static readonly BigRational NegativeInfinity = new BigRational(1, 0);
 
         //konstruktory
 
@@ -22,33 +27,35 @@ namespace BigRationalLib
 
             if (this.Equals(NaN)) return;
 
-
-
-            //znaki ułamka
-            if (Denominator < 0)
-               (Numerator, Denominator) = (-Numerator, -Denominator);
-              //  denominator *= -1;
-              //  numerator *= -1;
-
             //uproszczenie GreatesCommonInteger
-            //if (true)
-            //{ }
+    
                 var GCD = BigInteger.GreatestCommonDivisor(Numerator, Denominator);
                 Numerator /= GCD;
                 Denominator /= GCD;
-            
+
+            //znaki ułamka
+            if (Denominator < 0)
+                (Numerator, Denominator) = (-Numerator, -Denominator);
+
         }
+
+        public BigRational(BigInteger value) : this(value, 1) { }
+
+        public BigRational() : this(0, 1) { }
 
         //tostring
         public override string ToString() => $"{Numerator}/{Denominator}";
 
 
-        //public BigRational Pause(string text)
-        //{
-        //   return text.Split('/');
-        //}
+        public static BigRational Parse(string text)
+        {
+            var tab =  text.Split('/');
 
-        //equals, równość - zdefinij = i !=
+            if (tab.Length != 2)
+                throw new FormatException();
+
+            return new BigRational(BigInteger.Parse(tab[0]), BigInteger.Parse(tab[1]));
+        }
 
         //relacje
 
