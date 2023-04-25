@@ -14,7 +14,7 @@ namespace BigRationalLib
                 left.Denominator * right.Denominator);
         }
 
-        public static BigRational operator ++(BigRational b) => b + new BigRational(1);
+        public static BigRational operator ++(BigRational b) => b + 1;
 
         public static BigRational operator -(BigRational left, BigRational right)
         {
@@ -27,7 +27,7 @@ namespace BigRationalLib
                 left.Denominator * right.Denominator);
         }
 
-        public static BigRational operator --(BigRational b) => b - new BigRational(1);
+        public static BigRational operator --(BigRational b) => b - 1;
 
 
     }
